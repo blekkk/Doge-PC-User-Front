@@ -1,38 +1,19 @@
-import React from 'react';
 import './App.css';
-import Users from './components/Users'
-const axios = require('axios');
+import Header from './components/header/header';
+import {
+  BrowserRouter as Router,
+} from "react-router-dom";
+import Main from './components/main/main';
 
-class App extends React.Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      apiData: []
-    }
-  }
-
-  async componentDidMount() {
-    const response = await axios.get('http://localhost:8080/users')
-    this.setState({
-      apiData: response.data
-    });
-  }
-
-  render() {
-    console.log(this.state.apiData);
-    return(
-      <>
-      <div className='wrapper'>
-         {this.state.apiData.map((userData, key) => {
-          return(
-            <Users  data={userData} key={key}/>
-          )
-        })} 
-      </div>
-      </>
-    )
-  }
+const App = () => {
+  return (
+    <div>
+      <Router >
+        <Header />
+        <Main />
+      </Router>
+    </div>
+  )
 }
 
 export default App;
