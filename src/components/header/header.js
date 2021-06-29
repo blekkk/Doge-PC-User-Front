@@ -52,7 +52,7 @@ const Header = (props) => {
     <header>
       <div className="header-wrapper">
         <nav>
-          <img src={process.env.PUBLIC_URL + 'dogePC.png'} alt="logo" className="logo" />
+          <img src={process.env.PUBLIC_URL + 'dogePC.png'} alt="logo" className="logo-header" />
           <NavLink to='/'>
             <h2>
               Doge-PC
