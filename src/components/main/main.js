@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import Home from '../home/home';
+import SignUp from '../auth/signup';
+import SignIn from '../auth/signin';
 import {
   Switch,
   Route,
@@ -11,6 +13,12 @@ const Main = () => {
       <Switch>
         <Route exact={true} path='/'>
           <Home />
+        </Route>
+        <Route path='/signup'>
+          <SignUp />
+        </Route>
+        <Route path='/signin'>
+          <SignIn />
         </Route>
       </Switch>
     </main>

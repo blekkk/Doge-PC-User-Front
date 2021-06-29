@@ -1,9 +1,9 @@
-a {
+.header-wrapper a, .category-wrapper a {
   color: #000;
   text-decoration: none;
 }
 
-a:hover {
+.header-wrapper a:hover, .category-wrapper a:hover {
   text-decoration: underline;
 }
 
@@ -70,4 +70,13 @@ nav>div {
   background: #C4B283;
   margin: 0;
   padding: 10px 0;
+}
+
+.profile {
+  position: relative;
+}
+
+.profile-dropdown {
+  position: absolute;
+  padding: 12px;
 }
