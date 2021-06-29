@@ -1,0 +1,67 @@
+.slider {
+    overflow: hidden;
+}
+
+.slider figure {
+    position: relative;
+    width: 500%;
+    margin: 0;
+    left: 0;
+    animation: 25s slider infinite;
+}
+
+.slider figure img {
+    float: left;
+    width: 20%;
+    height: 50%;
+    object-fit: cover;
+}
+
+@keyframes slider {
+    0% {
+        left: 0;
+    }
+    20% {
+        left: 0;
+    }
+    25% {
+        left: -100%;
+    }
+    40% {
+        left: -100%;
+    }
+    45% {
+        left: -200%;
+    }
+    60% {
+        left: -200%;
+    }
+    65% {
+        left: -300%;
+    }
+    80% {
+        left: -300%;
+    }
+    84% {
+        left: -400%;
+    }
+    93% {
+        left: -400%;
+    }
+    100% {
+        right: -500%;
+    }
+}
+
+.product-container {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-gap: 50px 50px;
+    padding-top: 70px;
+    padding-left: 47px;
+    padding-bottom: 50px;
+}
+
+.product-item img {
+    width: 95%;
+}
