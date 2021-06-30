@@ -33,8 +33,8 @@ const profile = (token, flag, setFlag) => {
     return (
       <nav>
         <div>
-          <span className="header-logged profile" onClick={ () => setFlag(!flag) }><IoPersonCircle /></span>
-          { profileDropdown(flag, setFlag) }
+          <span className="header-logged profile" onClick={() => setFlag(!flag)}><IoPersonCircle /></span>
+          {profileDropdown(flag, setFlag)}
         </div>
         <div>
           <span className="header-logged cart"><IoCart /></span>
