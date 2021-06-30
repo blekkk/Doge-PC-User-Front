@@ -1,52 +1,50 @@
 import './header.css';
 import { Formik, Form, Field } from 'formik';
 import { NavLink, Link } from 'react-router-dom';
-import useToken from '../../hooks/useToken';
 import { IoPersonCircle, IoCart } from 'react-icons/io5'
 import { useState } from 'react';
 
-const profileDropdown = (flag) => {
-  if (flag)
-    return (
-      <div className="profile-dropdown">
-        <p>My Account</p>
-        <p onClick={() => {
-          localStorage.removeItem('auth-token-user');
-        }}>Log Out</p>
-      </div>
-    )
-}
-
-const profile = (token, flag, setFlag) => {
-  if (!token) {
-    return (
-      <nav>
-        <Link to='/signin'>
-          Sign In
-        </Link>
-        <Link to='/signup'>
-          Sign Up
-        </Link>
-      </nav>
-    );
-  } else {
-    return (
-      <nav>
-        <div>
-          <span className="header-logged profile" onClick={ () => setFlag(!flag) }><IoPersonCircle /></span>
-          { profileDropdown(flag, setFlag) }
-        </div>
-        <div>
-          <span className="header-logged cart"><IoCart /></span>
-        </div>
-      </nav>
-    )
-  }
-}
-
 const Header = (props) => {
-  const { token } = useToken();
+  const { token, deleteToken } = props;
   const [profileDropdownFlag, setProfileDropdownFlag] = useState(false);
+
+  const profileDropdown = () => {
+    if (profileDropdownFlag)
+      return (
+        <div className="profile-dropdown">
+          <p onClick={() => {
+            deleteToken();
+          }}>Log Out</p>
+        </div>
+      )
+  }
+
+  const profile = () => {
+    if (!token) {
+      return (
+        <nav>
+          <Link to='/signin'>
+            Sign In
+          </Link>
+          <Link to='/signup'>
+            Sign Up
+          </Link>
+        </nav>
+      );
+    } else {
+      return (
+        <nav>
+          <div>
+            <span className="header-logged profile" onClick={() => setProfileDropdownFlag(!profileDropdownFlag)}><IoPersonCircle /></span>
+            { profileDropdown() }
+          </div>
+          <div>
+            <span className="header-logged cart"><IoCart /></span>
+          </div>
+        </nav>
+      )
+    }
+  }
 
   return (
     <header>
@@ -79,7 +77,7 @@ const Header = (props) => {
             )}
           </Formik>
         </nav>
-        {profile(token, profileDropdownFlag, setProfileDropdownFlag)}
+        { profile() }
       </div>
       <div className="category-wrapper">
         <ul>

@@ -3,27 +3,25 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { Link, withRouter } from 'react-router-dom';
 import './auth.css'
 import axios from 'axios';
-import useToken from '../../hooks/useToken';
 
 const submitSignUp = async (data) => {
   return axios.post('http://localhost:8080/user/signup', data);
 }
 
-const displayEmailNotExisting = (emailNotExisting) => {
-  if (emailNotExisting) {
-    return '';
-  } else {
-    return (
-      <span className="form-error">Email already exist!</span>
-    )
-  }
-};
-
 const SignUp = (props) => {
-  const [emailNotExisting, setEmailNotExisting] = useState(true);
+  const { token, history } = props;
+  const [emailNotExisting, setEmailNotExisting] = useState(false);
   const [signupSuccess, setSignupSuccess] = useState(false);
-  const { token, setToken } = useToken();
-  const { history } = props;
+
+  const displayEmailNotExisting = () => {
+    if (!emailNotExisting) {
+      return '';
+    } else {
+      return (
+        <span className="form-error">Email already exist!</span>
+      )
+    }
+  };
 
   if (!token)
     return (
@@ -109,7 +107,7 @@ const SignUp = (props) => {
                       {signupSuccess ? 'Success, please wait...' : 'Sign Up'}
                     </button>
                   </div>
-                  {displayEmailNotExisting(emailNotExisting)}
+                  { displayEmailNotExisting() }
                 </Form>
               )}
             </Formik>

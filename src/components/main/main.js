@@ -7,7 +7,9 @@ import {
   Route,
 } from "react-router-dom";
 
-const Main = () => {
+const Main = (props) => {
+  const { token, setToken } = props;
+
   return (
     <main>
       <Switch>
@@ -15,10 +17,10 @@ const Main = () => {
           <Home />
         </Route>
         <Route path='/signup'>
-          <SignUp />
+          <SignUp token={ token } />
         </Route>
         <Route path='/signin'>
-          <SignIn />
+          <SignIn token={ token } setToken={ setToken } />
         </Route>
       </Switch>
     </main>

@@ -1,29 +1,27 @@
 import { useState, useEffect } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { Link, withRouter } from 'react-router-dom';
-import './auth.css'
-import useToken from '../../hooks/useToken';
+import './auth.css';
 import axios from 'axios';
 
 const submitSignIn = async (data) => {
   return axios.post('http://localhost:8080/user/signin', data);
 }
 
-const displayAccountNotExist = (accountNotExist) => {
-  if (!accountNotExist) {
-    return '';
-  } else {
-    return (
-      <span className="form-error">Email or password is wrong!</span>
-    )
-  }
-};
-
 const SignIn = (props) => {
-  const { history } = props;
+  const { token, setToken, history } = props;
   const [accountNotExist, setAccountNotExist] = useState(false);
   const [signinSuccess, setSigninSuccess] = useState(false);
-  const { token, setToken } = useToken();
+
+  const displayAccountNotExist = () => {
+    if (!accountNotExist) {
+      return '';
+    } else {
+      return (
+        <span className="form-error">Email or password is wrong!</span>
+      )
+    }
+  };
 
   if (!token)
     return (
@@ -46,12 +44,11 @@ const SignIn = (props) => {
                 try {
                   const data = { ...values };
                   const result = await submitSignIn(data);
-                  setSigninSuccess(true);
                   setAccountNotExist(false);
+                  setSigninSuccess(true);
                   setTimeout(() => {
+                    setToken(result.headers['auth-token']);
                     setSubmitting(false);
-                    history.push('/')
-                    setToken(result.headers['auth-token-user']);
                   }, 3000)
                 } catch (error) {
                   console.log(error);
@@ -75,7 +72,7 @@ const SignIn = (props) => {
                       {signinSuccess ? 'Success, please wait...' : 'Sign In'}
                     </button>
                   </div>
-                  { displayAccountNotExist(accountNotExist) }
+                  { displayAccountNotExist() }
                 </Form>
               )}
             </Formik>

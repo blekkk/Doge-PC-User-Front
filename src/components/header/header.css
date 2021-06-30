@@ -72,6 +72,10 @@ nav>div {
   padding: 10px 0;
 }
 
+.header-logged {
+  font-size: 2rem;
+}
+
 .profile {
   position: relative;
 }
@@ -79,4 +83,5 @@ nav>div {
 .profile-dropdown {
   position: absolute;
   padding: 12px;
+  background: #fff;
 }
