@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { Link, withRouter } from 'react-router-dom';
 import './auth.css'

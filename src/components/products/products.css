@@ -1,0 +1,38 @@
+.products-wrapper {
+  margin: 2rem 6rem;
+}
+
+.products-content {
+  min-height: 90vh;
+}
+
+.products-content-main {
+  display: flex;
+  min-height: 90vh;
+}
+
+.products-content-main aside {
+  width: 20%;
+  height: max-content;
+  border: 1px solid #000;
+  text-align: center;
+}
+
+.products-content-main main {
+  width: 80%;
+  margin-left: 2rem;
+}
+
+.product-item {
+  width: 256px;
+  margin: 0 2rem 2rem 2rem;
+}
+
+.product-item img {
+  width: 256px;
+}
+
+.product-item div {
+  display: flex;
+  justify-content: space-between;
+}

@@ -3,14 +3,14 @@ label {
 }
 
 .auth-wrapper {
-  min-height: 100vh;
+  min-height: 90vh;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .auth-content {
-  max-width: 50%;
+  max-width: 25%;
   min-width: 25%;
   border: 1px solid #000;
   border-radius: 12px 12px 0 0;
@@ -52,6 +52,8 @@ label {
 
 .form-item {
   margin: 8px;
+  width: auto;
+  height: auto;
 }
 
 .form-item input {
@@ -81,4 +83,17 @@ label {
 
 .auth-form button:hover {
   border: 1px solid #000;
+}
+
+@media (max-width: 1400px) {
+  .auth-form>.form-item-name, .auth-form>.form-item-address {
+    flex-direction: column;
+  }
+
+  .auth-content {
+    min-width: 30%;
+  }
+  .auth-wrapper {
+    min-height: 120vh;
+  }
 }

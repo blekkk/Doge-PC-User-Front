@@ -8,10 +8,10 @@ const Footer = (props) => {
             <div className="footer-wrapper">
                 <nav>
                     <div alt="logo" className="logo-footer">
-                        <img src={process.env.PUBLIC_URL + 'dogePC.png'} className="logo-1" />
-                        <img src={process.env.PUBLIC_URL + 'dogePC.png'} className="logo-2" />
-                        <img src={process.env.PUBLIC_URL + 'dogePC.png'} className="logo-3" />
-                        <img src={process.env.PUBLIC_URL + 'dogePC.png'} className="logo-4" />
+                        <img src={process.env.PUBLIC_URL + 'dogePC.png'} className="logo-1" alt=""/>
+                        <img src={process.env.PUBLIC_URL + 'dogePC.png'} className="logo-2" alt=""/>
+                        <img src={process.env.PUBLIC_URL + 'dogePC.png'} className="logo-3" alt=""/>
+                        <img src={process.env.PUBLIC_URL + 'dogePC.png'} className="logo-4" alt=""/>
                     </div>
                     <NavLink to='/'>
                         <h2 id="doge-pc">
@@ -36,9 +36,9 @@ const Footer = (props) => {
 
                     <nav className="social-media">
                         <p>Find Us:</p>
-                        <a href="https://www.facebook.com/" target="_blank"><IoLogoFacebook /></a>
-                        <a href="https://www.instagram.com/" target="_blank"><IoLogoInstagram /></a>
-                        <a href="https://www.twitter.com/" target="_blank"><IoLogoTwitter /></a>
+                        <a href="https://www.facebook.com/" target="_blank" rel="noreferrer"><IoLogoFacebook /></a>
+                        <a href="https://www.instagram.com/" target="_blank" rel="noreferrer"><IoLogoInstagram /></a>
+                        <a href="https://www.twitter.com/" target="_blank" rel="noreferrer"><IoLogoTwitter /></a>
                     </nav>
                 </div>
             </div>
