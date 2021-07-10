@@ -1,56 +1,111 @@
 .slider {
+    width: 100%;
+    height: 500px;
     overflow: hidden;
 }
 
-.slider figure {
-    position: relative;
+.slides {
     width: 500%;
-    margin: 0;
-    left: 0;
-    animation: 25s slider infinite;
+    height: 500px;
+    display: flex;    
 }
 
-.slider figure img {
-    float: left;
+.slides input {
+    display: none;    
+}
+
+.slide {
     width: 20%;
-    height: 50%;
-    object-fit: cover;
+    transition: 2s;
 }
 
-@keyframes slider {
-    0% {
-        left: 0;
-    }
-    20% {
-        left: 0;
-    }
-    25% {
-        left: -100%;
-    }
-    40% {
-        left: -100%;
-    }
-    45% {
-        left: -200%;
-    }
-    60% {
-        left: -200%;
-    }
-    65% {
-        left: -300%;
-    }
-    80% {
-        left: -300%;
-    }
-    84% {
-        left: -400%;
-    }
-    93% {
-        left: -400%;
-    }
-    100% {
-        right: -500%;
-    }
+.slide img {
+    width: 100%;
+    height: 500px;
+}
+
+.navigation-manual {
+    position: absolute;
+    width: 800px;
+    margin-left: 270px;
+    margin-top: -40px;
+    display: flex;
+    justify-content: center;
+}
+
+.manual-btn {
+    border: 2px solid #E0CFA3;
+    padding: 5px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 1s;
+}
+.manual-btn:not(:last-child){
+    margin-right: 40px;    
+}
+
+.manual-btn:hover {
+    background: #E0CFA3;
+}
+
+#radio1:checked ~ .first {
+    margin-left: 0;
+}
+
+#radio2:checked ~ .first {
+    margin-left: -20%;
+}
+
+#radio3:checked ~ .first {
+    margin-left: -40%;
+}
+
+#radio4:checked ~ .first {
+    margin-left: -60%;
+}
+
+#radio5:checked ~ .first {
+    margin-left: -80%;
+}
+
+.navigation-auto {
+    position: absolute;
+    display: flex;
+    margin-left: 270px;
+    width: 800px;
+    justify-content: center;
+    margin-top: 466px;
+}
+
+.navigation-auto div {
+    border: 2px solid #E0CFA3;
+    padding: 5px;
+    border-radius: 10px;
+    transition: 1s;
+}
+
+.navigation-auto div:not(:last-child) {
+    margin-right: 40px;
+}
+
+#radio1:checked ~ .navigation-auto .auto-btn1 {
+    background: #E0CFA3;
+}
+
+#radio2:checked ~ .navigation-auto .auto-btn2 {
+    background: #E0CFA3;
+}
+
+#radio3:checked ~ .navigation-auto .auto-btn3 {
+    background: #E0CFA3;
+}
+
+#radio4:checked ~ .navigation-auto .auto-btn4 {
+    background: #E0CFA3;
+}
+
+#radio5:checked ~ .navigation-auto .auto-btn5 {
+    background: #E0CFA3;
 }
 
 .product-container {
@@ -62,6 +117,6 @@
     padding-bottom: 50px;
 }
 
-.product-item img {
+.product-item-sale img {
     width: 95%;
 }
