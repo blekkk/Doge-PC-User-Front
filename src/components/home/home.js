@@ -2,15 +2,13 @@ import './home.css'
 
 const autoSlider = () => {
   var counter = 1;
-  return (
-    setInterval(function () {
-      document.getElementById('radio' + counter).checked = true;
-      counter++;
-      if (counter > 5) {
-        counter = 1;
-      }
-    }, 5000)
-  );
+  setInterval(function () {
+    document.getElementById('radio' + counter).checked = true;
+    counter++;
+    if (counter > 5) {
+      counter = 1;
+    }
+  }, 5000);
 }
 
 const Home = () => {

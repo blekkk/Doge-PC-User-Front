@@ -1,3 +1,11 @@
 h1 {
     color: black;
 }
+
+.product-name-h1 {
+    margin-left: -30px;
+}
+
+.product-filter-aside {
+    margin-left: -30px;
+}

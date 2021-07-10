@@ -21,16 +21,16 @@ const Processor = (props) => {
   return (
     <div className="products-wrapper">
       <div className="products-content">
-        <h1>Processor - {data.length} Product</h1>
+        <h1 className="product-name-h1">Processor - {data.length} Product</h1>
         <div className="products-content-main">
-          <aside>
+          <aside className="product-filter-aside">
             <h3>Product Filters</h3>
           </aside>
           <main>
             {data.map((elem) => {
               return (
                 <div key={elem._id} className="product-item">
-                  <img src={process.env.PUBLIC_URL + 'images/product/gambar_belum_ada.jpg'} alt=""/>
+                  <img src={process.env.PUBLIC_URL + 'images/product/gambar_belum_ada.jpg'} alt="" />
                   <p>{elem.product_name}</p>
                   <div>
                     <span>{formatter.format(elem.price)}</span>
