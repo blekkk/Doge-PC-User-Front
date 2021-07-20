@@ -2,6 +2,7 @@ import './processor.css';
 import '../products.css';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
+import ReactPaginate from 'react-paginate';
 
 const Processor = (props) => {
   const [data, setData] = useState([]);
@@ -26,7 +27,7 @@ const Processor = (props) => {
           <aside className="product-filter-aside">
             <h3>Product Filters</h3>
           </aside>
-          <main>
+          <main className="products-grid">
             {data.map((elem) => {
               return (
                 <div key={elem._id} className="product-item">
@@ -40,6 +41,21 @@ const Processor = (props) => {
               )
             })}
           </main>
+        </div>
+        <div className="product-pagination">
+          <ReactPaginate
+            previousLabel={'Previous'}
+            nextLabel={'Next'}
+            breakLabel={'...'}
+            breakClassName={'break-me'}
+            pageCount={10}  // pake fungsi biar sesuai jumlah produk
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={5}
+            // onPageChange={this.handlePageClick}
+            containerClassName={'pagination'}
+            activeClassName={'active'}
+            perPage={12}
+          />
         </div>
       </div>
     </div>
