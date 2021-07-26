@@ -1,17 +1,19 @@
+import { useEffect } from 'react';
 import './home.css'
 
-const autoSlider = () => {
-  var counter = 1;
-  setInterval(function () {
-    document.getElementById('radio' + counter).checked = true;
-    counter++;
-    if (counter > 5) {
-      counter = 1;
-    }
-  }, 5000);
-}
+const Home = (props) => {
 
-const Home = () => {
+  // useEffect(() => {
+  //   var counter = 1;
+  //   setInterval(function () {
+  //     document.getElementById('radio' + counter).checked = true;
+  //     counter++;
+  //     if (counter > 5) {
+  //       counter = 1;
+  //     }
+  //   }, 5000);
+  // }, [])
+
   return (
     <div>
       {/* image slider */}
@@ -55,7 +57,6 @@ const Home = () => {
           <label for="radio4" className="manual-btn"></label>
           <label for="radio5" className="manual-btn"></label>
         </div>
-        {autoSlider()}
       </div>
 
       {/* product sale  */}
