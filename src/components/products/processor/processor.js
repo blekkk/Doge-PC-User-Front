@@ -1,4 +1,4 @@
-import {Fragment} from 'react';
+import { Fragment } from 'react';
 import './processor.css';
 import '../products.css';
 import axios from 'axios';
@@ -24,17 +24,6 @@ const Processor = (props) => {
         const data = res.data;
         setDataCount(data.length);
         const slicedData = data.slice(offset, offset + perPage);
-        const finalData = slicedData.map((elem) => 
-            <div key={elem._id} className="product-item">
-              <img src={process.env.PUBLIC_URL + 'images/product/gambar_belum_ada.jpg'} alt="" />
-              <p>{elem.product_name}</p>
-              <div>
-                <span>{formatter.format(elem.price)}</span>
-                <span>{elem.average_rating}</span>
-              </div>
-            </div>
-        );
-
         console.log(slicedData);
 
         setPageCount(Math.ceil(data.length / perPage))
@@ -67,7 +56,7 @@ const Processor = (props) => {
                 return (
                   <div key={elem._id} className="product-item">
                     <img src={process.env.PUBLIC_URL + 'images/product/gambar_belum_ada.jpg'} alt="" />
-                    <p>{elem.product_name}</p>
+                    <p><a href="">{elem.product_name}</a></p>
                     <div>
                       <span>{formatter.format(elem.price)}</span>
                       <span>{elem.average_rating}</span>
@@ -78,8 +67,8 @@ const Processor = (props) => {
             </div>
             <div className="products-pagination">
               <ReactPaginate
-                previousLabel={"prev"}
-                nextLabel={"next"}
+                previousLabel={"Prev"}
+                nextLabel={"Next"}
                 breakLabel={"..."}
                 breakClassName={"break-me"}
                 pageCount={pageCount}

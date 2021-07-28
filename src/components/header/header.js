@@ -1,7 +1,7 @@
 import './header.css';
 import { Formik, Form, Field } from 'formik';
 import { NavLink, Link } from 'react-router-dom';
-import { IoPersonCircle, IoCart } from 'react-icons/io5'
+import { IoPersonCircle, IoCart } from 'react-icons/io5';
 import { useState } from 'react';
 
 const Header = (props) => {
@@ -36,10 +36,12 @@ const Header = (props) => {
         <nav>
           <div>
             <span className="header-logged profile" onClick={() => setProfileDropdownFlag(!profileDropdownFlag)}><IoPersonCircle /></span>
-            { profileDropdown() }
+            {profileDropdown()}
           </div>
           <div>
-            <span className="header-logged cart"><IoCart /></span>
+            <NavLink to='/product-detail'>
+              <span className="header-logged cart"><IoCart /></span>
+            </NavLink>
           </div>
         </nav>
       )
@@ -77,7 +79,7 @@ const Header = (props) => {
             )}
           </Formik>
         </nav>
-        { profile() }
+        {profile()}
       </div>
       <div className="category-wrapper">
         <ul>

@@ -1,0 +1,44 @@
+.detail-product {
+    display: grid;
+    grid-template-columns: 35% auto;
+}
+
+.detail-product img {
+    width: 65%;
+    margin-left: 80px;
+    margin-top: 40px
+}
+
+.detail-description h3{
+    border-style: solid;
+    border-width: 0 0 1px 0;
+    margin-right: 25%;
+}
+
+.detail-description ul li{
+    list-style: none;
+}
+
+.cart-btn {
+    display: flex;
+    margin-right: 72%;
+    background-color: #E0CFA3;
+}
+
+.review-list-container {
+    margin: 10px;
+    border-style: solid;
+    border-width: medium;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-gap: 20px;
+}
+
+.user-review-avatar {
+    float: left;
+    font-size: 3rem;
+}
+
+.review-list {
+    
+}

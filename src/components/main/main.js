@@ -8,6 +8,7 @@ import RAM from '../products/ram/ram';
 import Motherboard from '../products/motherboard/motherboard';
 import Storage from '../products/storage/storage';
 import PSU from '../products/psu/psu';
+import ProductDetail from '../product-detail/productDetail';
 import {
   Switch,
   Route,
@@ -23,10 +24,10 @@ const Main = (props) => {
           <Home />
         </Route>
         <Route path='/signup'>
-          <SignUp token={ token } />
+          <SignUp token={token} />
         </Route>
         <Route path='/signin'>
-          <SignIn token={ token } setToken={ setToken } />
+          <SignIn token={token} setToken={setToken} />
         </Route>
         <Route path='/processor'>
           <Processor />
@@ -45,6 +46,9 @@ const Main = (props) => {
         </Route>
         <Route path='/psu'>
           <PSU />
+        </Route>
+        <Route path='/product-detail'>
+          <ProductDetail />
         </Route>
       </Switch>
     </main>
