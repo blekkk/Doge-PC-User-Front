@@ -145,8 +145,8 @@ const Processor = (props) => {
                     <div key={elem._id} className="product-item">
                       <img src={process.env.PUBLIC_URL + 'images/product/gambar_belum_ada.jpg'} alt="" />
                       <div>
-                        <Link to="/product-detail">
-                          <p>{elem.product_name}</p>
+                        <Link to={`/product-detail/${elem._id}`} style={{ textDecoration: 'none' }}>
+                          <p className="product-name-link">{elem.product_name}</p>
                         </Link>
                         <div>
                           <span>{formatter.format(elem.price)}</span>

@@ -48,7 +48,7 @@ const Main = (props) => {
         <Route path='/psu'>
           <PSU />
         </Route>
-        <Route path='/product-detail'>
+        <Route path='/product-detail/:id'>
           <ProductDetail />
         </Route>
         <Route path='/cart'>
