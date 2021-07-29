@@ -1,47 +1,76 @@
-import {Fragment} from 'react';
-import './processor.css';
 import '../products.css';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import ReactPaginate from 'react-paginate';
+import ReactStars from "react-rating-stars-component";
+import { Formik, Form, Field, useFormikContext } from 'formik';
+import { withRouter, Link } from 'react-router-dom';
 
 const Processor = (props) => {
-  const [data, setData] = useState([]);
-  const [dataCount, setDataCount] = useState([]);
+  const { history } = props;
+  const [data, setData] = useState({
+    data: [],
+    lenght: 0
+  });
   const [offset, setOffset] = useState(0);
-  const [perPage, setPerPage] = useState(9);
   const [currentPage, setCurrentPage] = useState(0);
   const [pageCount, setPageCount] = useState(0);
+  const perPage = 9;
+  let query;
+  let queryString = '?' + (window.location.href.split('?')[1] || '');
 
   const formatter = new Intl.NumberFormat('id-ID', {
     style: 'currency',
     currency: 'IDR'
   });
 
+  const filterEmptyValue = (valueObject) => {
+    return valueObject.map(el => {
+      return Object.keys(el).reduce((newObj, key) => {
+        const value = el[key];
+        if (value !== "") {
+          newObj[key] = value;
+        }
+        return newObj;
+      }, {});
+    })[0];
+  }
+
   useEffect(() => {
-    axios.get(`http://localhost:8080/products/Processor`)
+    axios.get(`http://localhost:8080/products/Processor${queryString}`)
       .then((res) => {
         const data = res.data;
-        setDataCount(data.length);
         const slicedData = data.slice(offset, offset + perPage);
-        const finalData = slicedData.map((elem) => 
-            <div key={elem._id} className="product-item">
-              <img src={process.env.PUBLIC_URL + 'images/product/gambar_belum_ada.jpg'} alt="" />
-              <p>{elem.product_name}</p>
-              <div>
-                <span>{formatter.format(elem.price)}</span>
-                <span>{elem.average_rating}</span>
-              </div>
-            </div>
-        );
-
-        console.log(slicedData);
 
         setPageCount(Math.ceil(data.length / perPage))
-        setData(slicedData);
+        setData({
+          data: slicedData,
+          lenght: data.length
+        });
       })
       .catch((e) => console.log(e.message));
   }, [currentPage]);
+
+  const fetchDataQuery = (formValues) => {
+    const filteredObject = filterEmptyValue(formValues);
+    const filteredArray = Object.keys(filteredObject).map((k) => `${k}=${filteredObject[k]}`)
+
+    query = filteredArray;
+    queryString = '?' + query.join('&');
+
+    axios.get(`http://localhost:8080/products/Processor${queryString}`)
+      .then((res) => {
+        const data = res.data;
+        const slicedData = data.slice(offset, offset + perPage);
+
+        setPageCount(Math.ceil(data.length / perPage))
+        setData({
+          data: slicedData,
+          lenght: data.length
+        });
+      })
+      .catch((e) => console.log(e.message));
+  }
 
   const handlePageClick = (e) => {
     const selectedPage = e.selected;
@@ -51,26 +80,84 @@ const Processor = (props) => {
     setOffset(offset);
   }
 
-  console.log(data);
-
   return (
     <div className="products-wrapper">
       <div className="products-content">
-        <h1 className="product-name-h1">Processor - {dataCount} Product</h1>
+        <h1 className="product-name-h1">Processor - {data.lenght} Product</h1>
         <div className="products-content-main">
           <aside className="product-filter-aside">
             <h3>Product Filters</h3>
+            <Formik
+              initialValues={{
+                priceSort: "",
+                minRating: "",
+                soldSort: ""
+              }}
+              onSubmit={async (values) => {
+                try {
+                  const queries = [{
+                    priceSort: values.priceSort,
+                    soldSort: values.soldSort,
+                    minRating: parseInt(values.minRating) || "",
+                  }];
+                  fetchDataQuery(queries);
+                  history.push(`/processor${queryString}`);
+                } catch (error) {
+                  console.log(error);
+                }
+              }}
+            >
+              {() => (
+                <Form>
+                  <label htmlFor="priceSort">Sort by price: </label>
+                  <Field as="select" name="priceSort">
+                    <option value="">-</option>
+                    <option value="ASC">Ascending</option>
+                    <option value="DSC">Descending</option>
+                  </Field>
+                  <label htmlFor="soldSort">Sort by sales: </label>
+                  <Field as="select" name="soldSort">
+                    <option value="">-</option>
+                    <option value="ASC">Ascending</option>
+                    <option value="DSC">Descending</option>
+                  </Field>
+                  <label htmlFor="minRating">Minimum rating: </label>
+                  <Field as="select" name="minRating">
+                    <option value="">-</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                  </Field>
+                  <button type="submit">
+                    Filter
+                  </button>
+                </Form>
+              )}
+            </Formik>
           </aside>
           <main>
             <div className="products-grid">
-              {data.map((elem) => {
+              {data.data.map((elem) => {
                 return (
-                  <div key={elem._id} className="product-item">
-                    <img src={process.env.PUBLIC_URL + 'images/product/gambar_belum_ada.jpg'} alt="" />
-                    <p>{elem.product_name}</p>
-                    <div>
-                      <span>{formatter.format(elem.price)}</span>
-                      <span>{elem.average_rating}</span>
+                  <div className="product-item-wrapper">
+                    <div key={elem._id} className="product-item">
+                      <img src={process.env.PUBLIC_URL + 'images/product/gambar_belum_ada.jpg'} alt="" />
+                      <div>
+
+                      <p>{elem.product_name}</p>
+                      <div>
+                        <span>{formatter.format(elem.price)}</span>
+                        <ReactStars
+                          count={5}
+                          size={24}
+                          activeColor="#ffd700"
+                          value={elem.avgRating}
+                          edit={false}
+                        />
+                      </div>
+                      </div>
                     </div>
                   </div>
                 )
@@ -97,4 +184,4 @@ const Processor = (props) => {
   )
 }
 
-export default Processor;
+export default withRouter(Processor);
