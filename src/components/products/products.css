@@ -86,6 +86,12 @@ h1 {
   display: inline-block;
 }
 
+.product-name-link {
+  color: #000;
+  text-decoration: none;
+  font-weight: bold;
+}
+
 .products-pagination {
   display: flex;
   justify-content: center;

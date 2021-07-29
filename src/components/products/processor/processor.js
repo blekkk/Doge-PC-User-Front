@@ -145,18 +145,19 @@ const Processor = (props) => {
                     <div key={elem._id} className="product-item">
                       <img src={process.env.PUBLIC_URL + 'images/product/gambar_belum_ada.jpg'} alt="" />
                       <div>
-
-                      <p>{elem.product_name}</p>
-                      <div>
-                        <span>{formatter.format(elem.price)}</span>
-                        <ReactStars
-                          count={5}
-                          size={24}
-                          activeColor="#ffd700"
-                          value={elem.avgRating}
-                          edit={false}
-                        />
-                      </div>
+                        <Link to="/product-detail">
+                          <p>{elem.product_name}</p>
+                        </Link>
+                        <div>
+                          <span>{formatter.format(elem.price)}</span>
+                          <ReactStars
+                            count={5}
+                            size={24}
+                            activeColor="#ffd700"
+                            value={elem.avgRating}
+                            edit={false}
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -165,8 +166,8 @@ const Processor = (props) => {
             </div>
             <div className="products-pagination">
               <ReactPaginate
-                previousLabel={"prev"}
-                nextLabel={"next"}
+                previousLabel={"Prev"}
+                nextLabel={"Next"}
                 breakLabel={"..."}
                 breakClassName={"break-me"}
                 pageCount={pageCount}
