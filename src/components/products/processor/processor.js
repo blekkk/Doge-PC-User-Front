@@ -4,6 +4,7 @@ import '../products.css';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import ReactPaginate from 'react-paginate';
+import { NavLink } from 'react-router-dom';
 
 const Processor = (props) => {
   const [data, setData] = useState([]);
@@ -56,7 +57,9 @@ const Processor = (props) => {
                 return (
                   <div key={elem._id} className="product-item">
                     <img src={process.env.PUBLIC_URL + 'images/product/gambar_belum_ada.jpg'} alt="" />
-                    <p><a href="">{elem.product_name}</a></p>
+                    <NavLink to="/product-detail">
+                      <p className="product-name-link">{elem.product_name}</p>
+                    </NavLink>
                     <div>
                       <span>{formatter.format(elem.price)}</span>
                       <span>{elem.average_rating}</span>

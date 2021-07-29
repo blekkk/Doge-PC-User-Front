@@ -37,7 +37,7 @@
   justify-content: space-between;
 }
 
-.product-item p a{
+.product-name-link {
   color: #000;
   text-decoration: none;
   font-weight: bold;

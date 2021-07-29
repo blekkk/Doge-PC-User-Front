@@ -1,0 +1,13 @@
+.cart-container {
+    margin: 0 50px 50px 50px;
+}
+
+.product-cart {
+    display: grid;
+    grid-template-columns: 100px auto;
+    grid-gap: 30px;
+}
+
+.product-cart img {
+    width: 100%;
+}

@@ -9,6 +9,7 @@ import Motherboard from '../products/motherboard/motherboard';
 import Storage from '../products/storage/storage';
 import PSU from '../products/psu/psu';
 import ProductDetail from '../product-detail/productDetail';
+import Cart from '../cart/cart';
 import {
   Switch,
   Route,
@@ -49,6 +50,9 @@ const Main = (props) => {
         </Route>
         <Route path='/product-detail'>
           <ProductDetail />
+        </Route>
+        <Route path='/cart'>
+          <Cart />
         </Route>
       </Switch>
     </main>

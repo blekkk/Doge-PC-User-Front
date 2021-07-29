@@ -11,7 +11,13 @@ const ProductDetail = (props) => {
             .then((res) => setReview(res.data))
             .catch((e) => console.log(e.message));
     })
-    //console.log(review);
+
+    const addToCart = () => {
+        alert("Added to Cart")
+        if (window.confirm("Go to cart now?")) {
+            window.location = "/cart"
+        }
+    }
 
     return (
         <div>
@@ -35,7 +41,7 @@ const ProductDetail = (props) => {
                             <p>Blabla       :</p>
                         </li>
                     </ul>
-                    <button onClick="" className="cart-btn"> <h2>ADD TO CART</h2></button>
+                    <button onClick={addToCart} className="cart-btn"> <h2>ADD TO CART</h2></button>
                 </div>
             </div>
             <h3 style={{ margin: "50px 10px 10px 10px" }}>Reviews</h3>

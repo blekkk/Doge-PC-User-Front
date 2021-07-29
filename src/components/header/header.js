@@ -39,7 +39,7 @@ const Header = (props) => {
             {profileDropdown()}
           </div>
           <div>
-            <NavLink to='/product-detail'>
+            <NavLink to='/cart'>
               <span className="header-logged cart"><IoCart /></span>
             </NavLink>
           </div>
