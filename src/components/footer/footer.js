@@ -8,10 +8,10 @@ const Footer = (props) => {
             <div className="footer-wrapper">
                 <nav>
                     <div alt="logo" className="logo-footer">
-                        <img src={process.env.PUBLIC_URL + 'dogePC.png'} className="logo-1" alt=""/>
-                        <img src={process.env.PUBLIC_URL + 'dogePC.png'} className="logo-2" alt=""/>
-                        <img src={process.env.PUBLIC_URL + 'dogePC.png'} className="logo-3" alt=""/>
-                        <img src={process.env.PUBLIC_URL + 'dogePC.png'} className="logo-4" alt=""/>
+                        <img src={process.env.PUBLIC_URL + '/dogePC.png'} className="logo-1" alt=""/>
+                        <img src={process.env.PUBLIC_URL + '/dogePC.png'} className="logo-2" alt=""/>
+                        <img src={process.env.PUBLIC_URL + '/dogePC.png'} className="logo-3" alt=""/>
+                        <img src={process.env.PUBLIC_URL + '/dogePC.png'} className="logo-4" alt=""/>
                     </div>
                     <NavLink to='/'>
                         <h2 id="doge-pc">

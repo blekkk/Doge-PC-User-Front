@@ -26,19 +26,19 @@ const Home = (props) => {
           <input type="radio" name="radio-btn" id="radio5" />
 
           <div className="slide first">
-            <img src={process.env.PUBLIC_URL + 'images/banner/intel_banner.jpeg'} />
+            <img src={process.env.PUBLIC_URL + '/images/banner/intel_banner.jpeg'} />
           </div>
           <div className="slide">
-            <img src={process.env.PUBLIC_URL + 'images/banner/rtx_banner.jpg'} />
+            <img src={process.env.PUBLIC_URL + '/images/banner/rtx_banner.jpg'} />
           </div>
           <div className="slide">
-            <img src={process.env.PUBLIC_URL + 'images/banner/gigabyte_banner.jpg'} />
+            <img src={process.env.PUBLIC_URL + '/images/banner/gigabyte_banner.jpg'} />
           </div>
           <div className="slide">
-            <img src={process.env.PUBLIC_URL + 'images/banner/samsung_banner.jpg'} />
+            <img src={process.env.PUBLIC_URL + '/images/banner/samsung_banner.jpg'} />
           </div>
           <div className="slide">
-            <img src={process.env.PUBLIC_URL + 'images/banner/corsair_banner.jpg'} />
+            <img src={process.env.PUBLIC_URL + '/images/banner/corsair_banner.jpg'} />
           </div>
 
           <div className="navigation-auto">
@@ -63,19 +63,19 @@ const Home = (props) => {
       <div className="product-container">
         <div className="product-item-sale">
           <h2>New Release</h2>
-          <img src={process.env.PUBLIC_URL + 'images/banner/intel_banner.jpeg'} alt="" />
+          <img src={process.env.PUBLIC_URL + '/images/banner/intel_banner.jpeg'} alt="" />
         </div>
         <div className="product-item-sale">
           <h2>On Sale</h2>
-          <img src={process.env.PUBLIC_URL + 'images/banner/samsung_banner.jpg'} alt="" />
+          <img src={process.env.PUBLIC_URL + '/images/banner/samsung_banner.jpg'} alt="" />
         </div>
         <div className="product-item-sale">
           <h2>Best Seller</h2>
-          <img src={process.env.PUBLIC_URL + 'images/banner/gigabyte_banner.jpg'} alt="" />
+          <img src={process.env.PUBLIC_URL + '/images/banner/gigabyte_banner.jpg'} alt="" />
         </div>
         <div className="product-item-sale">
           <h2>Gaming Experience</h2>
-          <img src={process.env.PUBLIC_URL + 'images/banner/rtx_banner.jpg'} alt="" />
+          <img src={process.env.PUBLIC_URL + '/images/banner/rtx_banner.jpg'} alt="" />
         </div>
       </div>
     </div>

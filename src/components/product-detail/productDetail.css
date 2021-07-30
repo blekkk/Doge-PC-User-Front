@@ -15,6 +15,10 @@
   margin-right: 25%;
 }
 
+.detail-description ul {
+  padding: 0;
+}
+
 .detail-description ul li{
   list-style: none;
 }
@@ -37,8 +41,4 @@
 .user-review-avatar {
   float: left;
   font-size: 3rem;
-}
-
-.review-list {
-    
 }

@@ -1,11 +1,12 @@
 import './productDetail.css'
 import { useState, useEffect } from 'react'
 import { IoPersonCircle } from 'react-icons/io5'
-import { useParams } from 'react-router'
+import { useParams, withRouter } from 'react-router'
+import ReactStars from "react-rating-stars-component";
 import axios from 'axios'
 
 const ProductDetail = (props) => {
-  const { token, setToken, uid, setUid } = props
+  const { token, setToken, uid, setUid, history } = props
   const [review, setReview] = useState([])
   const [product, setProduct] = useState({})
   const [user, setUser] = useState({})
@@ -36,13 +37,13 @@ const ProductDetail = (props) => {
   const handleAddToCart = () => {
     alert("Added to Cart")
     if (window.confirm("Go to cart now?")) {
-      window.location = `/cart/${user._id}`
+      history.push('/cart');
     }
   }
   console.log(token)
   const handleCartNotLoggedIn = () => {
     alert("Please sign in to continue")
-    window.location = "/signin"
+    history.push('/signin');
   }
 
   const addToCart = () => {
@@ -60,10 +61,19 @@ const ProductDetail = (props) => {
   return (
     <div>
       <div className="detail-product">
-        <img src={process.env.PUBLIC_URL + 'images/product/gambar_belum_ada.jpg'} alt="" />
+      <img src={process.env.PUBLIC_URL + '/images/product/gambar_belum_ada.jpg'} alt="" />
         <div className="detail-description">
           <h2>{product.product_name}</h2>
-          <h3>{formatter.format(product.price)}</h3>
+          <div>
+            <h3>{formatter.format(product.price)}</h3>
+            <ReactStars
+              count={5}
+              size={24}
+              activeColor="#ffd700"
+              value={product.avgRating}
+              edit={false}
+            />
+          </div>
           <p>Deskripsi Deskripsi Deskripsi Deskripsi Deskripsi Deskripsi </p>
           <ul>
             <li>
@@ -99,4 +109,4 @@ const ProductDetail = (props) => {
 
 }
 
-export default ProductDetail;
+export default withRouter(ProductDetail);

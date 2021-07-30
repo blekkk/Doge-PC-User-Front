@@ -1,14 +1,13 @@
-// DEPRECATED !!!!!
-import '../products.css';
+import './products.css';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import ReactPaginate from 'react-paginate';
 import ReactStars from "react-rating-stars-component";
-import { Formik, Form, Field, useFormikContext } from 'formik';
+import { Formik, Form, Field } from 'formik';
 import { withRouter, Link } from 'react-router-dom';
 
-const Processor = (props) => {
-  const { history } = props;
+const Products = (props) => {
+  const { history, category } = props;
   const [data, setData] = useState({
     data: [],
     lenght: 0
@@ -38,7 +37,7 @@ const Processor = (props) => {
   }
 
   useEffect(() => {
-    axios.get(`http://localhost:8080/products/Processor${queryString}`)
+    axios.get(`http://localhost:8080/products/${category + queryString}`)
       .then((res) => {
         const data = res.data;
         const slicedData = data.slice(offset, offset + perPage);
@@ -59,7 +58,7 @@ const Processor = (props) => {
     query = filteredArray;
     queryString = '?' + query.join('&');
 
-    axios.get(`http://localhost:8080/products/Processor${queryString}`)
+    axios.get(`http://localhost:8080/products/${category + queryString}`)
       .then((res) => {
         const data = res.data;
         const slicedData = data.slice(offset, offset + perPage);
@@ -82,7 +81,7 @@ const Processor = (props) => {
   }
 
   return (
-    <div className="products-wrapper">
+    <div className="products-wrapper" key={props.key}>
       <div className="products-content">
         <h1 className="product-name-h1">Processor - {data.lenght} Product</h1>
         <div className="products-content-main">
@@ -102,7 +101,7 @@ const Processor = (props) => {
                     minRating: parseInt(values.minRating) || "",
                   }];
                   fetchDataQuery(queries);
-                  history.push(`/processor${queryString}`);
+                  history.push(`/${category + queryString}`);
                 } catch (error) {
                   console.log(error);
                 }
@@ -187,4 +186,4 @@ const Processor = (props) => {
   )
 }
 
-export default withRouter(Processor);
+export default withRouter(Products);

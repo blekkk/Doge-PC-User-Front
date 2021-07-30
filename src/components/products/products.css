@@ -55,6 +55,14 @@ h1 {
   width: 100%;
 }
 
+.product-item a {
+  text-decoration: none;
+}
+
+.product-item a:hover {
+  text-decoration: underline;
+}
+
 .product-item>div>div {
   display: flex;
   justify-content: space-between;

@@ -52,7 +52,7 @@ const Header = (props) => {
     <header>
       <div className="header-wrapper">
         <nav>
-          <img src={process.env.PUBLIC_URL + 'dogePC.png'} alt="logo" className="logo-header" />
+          <img src={process.env.PUBLIC_URL + '/dogePC.png'} alt="logo" className="logo-header" />
           <NavLink to='/'>
             <h2>
               Doge-PC
@@ -84,32 +84,32 @@ const Header = (props) => {
       <div className="category-wrapper">
         <ul>
           <li>
-            <NavLink to='/processor'>
+            <NavLink to='/Processor'>
               Processor
             </NavLink>
           </li>
           <li>
-            <NavLink to='/gpu'>
+            <NavLink to='/GPU'>
               GPU
             </NavLink>
           </li>
           <li>
-            <NavLink to='/ram'>
+            <NavLink to='/RAM'>
               RAM
             </NavLink>
           </li>
           <li>
-            <NavLink to='/motherboard'>
+            <NavLink to='/Motherboard'>
               Motherboard
             </NavLink>
           </li>
           <li>
-            <NavLink to='/storage'>
+            <NavLink to='/Storage'>
               Storage
             </NavLink>
           </li>
           <li>
-            <NavLink to='/psu'>
+            <NavLink to='/PSU'>
               PSU
             </NavLink>
           </li>
