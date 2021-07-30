@@ -49,7 +49,7 @@ const Main = (props) => {
           <PSU />
         </Route>
         <Route path='/product-detail/:id'>
-          <ProductDetail />
+          <ProductDetail token={token} />
         </Route>
         <Route path='/cart'>
           <Cart />

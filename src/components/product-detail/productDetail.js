@@ -5,6 +5,7 @@ import { useParams } from 'react-router'
 import axios from 'axios'
 
 const ProductDetail = (props) => {
+  const { token, deleteToken } = props
   const [review, setReview] = useState([])
   const [product, setProduct] = useState({})
   const { id } = useParams()
@@ -26,10 +27,27 @@ const ProductDetail = (props) => {
 
   console.log(id)
 
-  const addToCart = () => {
+  const handleAddToCart = () => {
     alert("Added to Cart")
     if (window.confirm("Go to cart now?")) {
       window.location = "/cart"
+    }
+  }
+  console.log(token)
+  const handleCartNotLoggedIn = () => {
+    alert("Please sign in to continue")
+    window.location = "/signin"
+  }
+
+  const addToCart = () => {
+    if (token) {
+      return (
+        handleAddToCart()
+      )
+    } else {
+      return (
+        handleCartNotLoggedIn()
+      )
     }
   }
 
