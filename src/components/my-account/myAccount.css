@@ -1,0 +1,64 @@
+.account-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.account-content {
+  margin: 2rem 4rem;
+  width: 85%;
+}
+
+.account-content>h1 {
+  text-align: center;
+}
+
+.account-content-details {
+  display: flex;
+  justify-content: center;
+}
+
+.account-content-details img {
+  width: 300px;
+}
+
+.account-content-details h2 {
+  border-bottom: 1px solid black;
+}
+
+.account-content-details>main {
+  width: 35%;
+  padding: 0 2rem;
+}
+
+.account-content-details>aside {
+  width: 40%;
+  display: flex;
+  justify-content: center; 
+}
+
+.account-content-details>aside>div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.account-content-details>main,aside {
+  margin-bottom: 2rem;
+}
+.account-content-details form div {
+  display: flex;
+  flex-direction: column;
+}
+
+.account-content-details form input {
+  width: 60%;
+  height: 2rem;
+  padding: 0 6px;
+}
+
+.account-content-details form textarea {
+  width: 60%;
+  padding: 4px 6px;
+  min-height: 8rem;
+}

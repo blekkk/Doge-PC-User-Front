@@ -74,6 +74,7 @@ nav>div {
 
 .header-logged {
   font-size: 2rem;
+  cursor: pointer;
 }
 
 .profile {
@@ -84,4 +85,10 @@ nav>div {
   position: absolute;
   padding: 12px;
   background: #fff;
+  box-shadow: 0 0 3px #ccc;
+}
+
+.profile-dropdown p:hover {
+  text-decoration: underline;
+  cursor: pointer;
 }

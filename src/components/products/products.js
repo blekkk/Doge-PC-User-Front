@@ -83,7 +83,7 @@ const Products = (props) => {
   return (
     <div className="products-wrapper" key={props.key}>
       <div className="products-content">
-        <h1 className="product-name-h1">Processor - {data.lenght} Product</h1>
+        <h1 className="product-name-h1">{category} - {data.lenght} Product</h1>
         <div className="products-content-main">
           <aside className="product-filter-aside">
             <h3>Product Filters</h3>

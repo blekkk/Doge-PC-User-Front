@@ -12,6 +12,9 @@ const Header = (props) => {
     if (profileDropdownFlag)
       return (
         <div className="profile-dropdown">
+          <Link to="/account">
+            <p>My Account</p>
+          </Link>
           <p onClick={() => {
             deleteToken();
           }}>Log Out</p>

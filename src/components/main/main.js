@@ -4,6 +4,7 @@ import SignIn from '../auth/signin';
 import ProductDetail from '../product-detail/productDetail';
 import Cart from '../cart/cart';
 import Products from '../products/products';
+import MyAccount from '../my-account/myAccount';
 import {
   Switch,
   Route,
@@ -48,6 +49,9 @@ const Main = (props) => {
         </Route>
         <Route path='/cart'>
           <Cart />
+        </Route>
+        <Route path='/account'>
+          <MyAccount token={token} />
         </Route>
       </Switch>
     </main>

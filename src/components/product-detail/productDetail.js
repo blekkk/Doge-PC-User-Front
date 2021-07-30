@@ -22,7 +22,7 @@ const ProductDetail = (props) => {
       .catch((e) => console.log(e.message))
     console.log(product)
 
-    axios.get('http://localhost:8080/user')
+    axios.get('http://localhost:8080/users')
       .then((res) => setReview(res.data))
       .catch((e) => console.log(e.message))
 
