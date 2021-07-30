@@ -5,9 +5,10 @@ import { useParams } from 'react-router'
 import axios from 'axios'
 
 const ProductDetail = (props) => {
-  const { token, deleteToken } = props
+  const { token, setToken, uid, setUid } = props
   const [review, setReview] = useState([])
   const [product, setProduct] = useState({})
+  const [user, setUser] = useState({})
   const { id } = useParams()
   const formatter = new Intl.NumberFormat('id-ID', {
     style: 'currency',
@@ -23,6 +24,11 @@ const ProductDetail = (props) => {
     axios.get('http://localhost:8080/user')
       .then((res) => setReview(res.data))
       .catch((e) => console.log(e.message))
+
+    axios.get(`http://localhost:8080/user/${uid}`)
+      .then((res) => setUser(res.data))
+      .catch((e) => console.log(e.message))
+    console.log(user)
   }, [])
 
   console.log(id)
@@ -30,7 +36,7 @@ const ProductDetail = (props) => {
   const handleAddToCart = () => {
     alert("Added to Cart")
     if (window.confirm("Go to cart now?")) {
-      window.location = "/cart"
+      window.location = `/cart/${user._id}`
     }
   }
   console.log(token)
@@ -74,6 +80,7 @@ const ProductDetail = (props) => {
             </li>
           </ul>
           <button onClick={() => addToCart()} className="cart-btn"> <h2>ADD TO CART</h2></button>
+          {/* {user.cart.push(product)} */}
         </div>
       </div>
       <h3 style={{ margin: "50px 10px 10px 10px" }}>Reviews</h3>

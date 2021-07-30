@@ -1,8 +1,20 @@
 import './cart.css'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
+import axios from 'axios'
 
 const Cart = (props) => {
   const [counter, setCounter] = useState(1)
+  const [user, setUser] = useState({})
+  const { id } = useParams()
+
+  useEffect(() => {
+    axios.get(`http://localhost:8080/user/${id}`)
+      .then((res) => setUser(res.data))
+      .catch((e) => console.log(e.message))
+    console.log(user)
+
+  }, [])
 
   const handleIncrement = () => {
     setCounter(counter + 1);

@@ -16,7 +16,7 @@ import {
 } from "react-router-dom";
 
 const Main = (props) => {
-  const { token, setToken } = props;
+  const { token, setToken, uid, setUid } = props;
 
   return (
     <main>
@@ -28,7 +28,7 @@ const Main = (props) => {
           <SignUp token={token} />
         </Route>
         <Route path='/signin'>
-          <SignIn token={token} setToken={setToken} />
+          <SignIn token={token} setToken={setToken} uid={uid} setId={setUid} />
         </Route>
         <Route path='/processor'>
           <Processor />
