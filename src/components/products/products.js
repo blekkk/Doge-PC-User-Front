@@ -151,13 +151,19 @@ const Products = (props) => {
                         </Link>
                         <div>
                           <span>{formatter.format(elem.price)}</span>
-                          <ReactStars
-                            count={5}
-                            size={24}
-                            activeColor="#ffd700"
-                            value={elem.avgRating}
-                            edit={false}
-                          />
+                          <div>
+                            <div>
+                              <ReactStars
+                                count={5}
+                                size={24}
+                                activeColor="#ffd700"
+                                value={elem.avgRating}
+                                edit={false}
+                              />
+                              <span>&nbsp;({elem?.reviews ? elem?.reviews?.length : 0})</span>
+                            </div>
+                            <span>Items sold: {elem.sold_number}</span>
+                          </div>
                         </div>
                       </div>
                     </div>

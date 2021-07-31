@@ -4,17 +4,21 @@ import { Link, withRouter } from 'react-router-dom';
 import './auth.css'
 import axios from 'axios';
 
-const submitSignUp = async (data) => {
-  return axios.post('http://localhost:8080/user/signup', data);
-}
-
 const SignUp = (props) => {
   const { token, history } = props;
-  const [emailNotExisting, setEmailNotExisting] = useState(false);
+  const [emailNotExisting, setEmailNotExisting] = useState(true);
   const [signupSuccess, setSignupSuccess] = useState(false);
+  
+  const submitSignUp = async (data) => {
+    return axios.post('http://localhost:8080/user/signup', data);
+  }
+
+  const insertNewCart = async (data) => {
+    return axios.post('http://localhost:8080/cart', data);
+  }
 
   const displayEmailNotExisting = () => {
-    if (!emailNotExisting) {
+    if (emailNotExisting) {
       return '';
     } else {
       return (
@@ -53,9 +57,11 @@ const SignUp = (props) => {
               onSubmit={async (values, { setSubmitting }) => {
                 try {
                   const newUser = { ...values };
-                  await submitSignUp(newUser);
+                  const response = await submitSignUp(newUser);
+                  console.log(response.data);
                   setSignupSuccess(true);
                   setEmailNotExisting(true);
+                  await insertNewCart({userid: response.data.userid});
                   setTimeout(() => {
                     setSubmitting(false);
                     history.push('/signin')
