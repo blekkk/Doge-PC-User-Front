@@ -5,6 +5,8 @@
 }
 
 .account-content {
+  box-shadow: 0 0 3px #ccc;
+  border-radius: 12px;
   margin: 2rem 4rem;
   width: 85%;
 }
@@ -32,6 +34,7 @@
 }
 
 .account-content-details>aside {
+  padding-top: 3rem;
   width: 40%;
   display: flex;
   justify-content: center; 
@@ -61,4 +64,34 @@
   width: 60%;
   padding: 4px 6px;
   min-height: 8rem;
+}
+
+.wishlist-item-wrapper {
+  display: flex;
+  align-items: center;
+  margin: 1rem 0;
+  padding: 1rem 0;
+  box-shadow: 0 0 6px #ccc;
+  border-radius: 12px;
+}
+
+.wishlist-item-wrapper-image>img {
+  width: 128px;
+}
+
+.wishlist-item-wrapper-details>p {
+  margin: 0;
+}
+
+.wishlist-item-wrapper-details>a {
+  text-decoration: none;
+  color: black;
+}
+
+.wishlist-item-wrapper-details>a:hover {
+  text-decoration: underline;
+}
+
+.wishlist-item-wrapper-image,.wishlist-item-wrapper-details {
+  margin: 0 1rem;
 }

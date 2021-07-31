@@ -3,10 +3,17 @@ import { Formik, Field, Form, ErrorMessage } from 'formik';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
+import ReactStars from "react-rating-stars-component";
+import { Link } from 'react-router-dom';
 
 const MyAccount = (props) => {
   const { token, history } = props;
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState({wishlist: []});
+
+  const formatter = new Intl.NumberFormat('id-ID', {
+    style: 'currency',
+    currency: 'IDR'
+  });
 
   useEffect(() => {
     axios.get('http://localhost:8080/user', {
@@ -17,6 +24,8 @@ const MyAccount = (props) => {
       setUser(res.data)
     ).catch(e => console.log(e.message));
   }, []);
+
+  console.log(user);
 
   const handleUpdateUserProfile = async (data) => {
     return await axios.put('http://localhost:8080/user', data, {
@@ -150,6 +159,29 @@ const MyAccount = (props) => {
                 </Form>
               )}
             </Formik>
+            <h2>Wishlist</h2>
+            {Array.prototype.map.call(user.wishlist, (item) => {
+              return(
+                <div className="wishlist-item-wrapper">
+                  <div className="wishlist-item-wrapper-image">
+                  <img src={process.env.PUBLIC_URL + '/images/product/gambar_belum_ada.jpg'} alt="gambar lom ada" />
+                  </div>
+                  <div className="wishlist-item-wrapper-details">
+                    <Link to={`/product-detail/${item.productId}`}>
+                      <p>{item.product_name}</p>
+                    </Link>
+                    <p>{formatter.format(item.price)}</p>
+                    <ReactStars
+                      count={5}
+                      size={24}
+                      activeColor="#ffd700"
+                      value={item.average_rating}
+                      edit={false}
+                    />
+                  </div>
+                </div>
+              )
+            })}
           </main>
           <aside>
             <div>

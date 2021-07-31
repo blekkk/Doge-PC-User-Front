@@ -23,10 +23,20 @@
   list-style: none;
 }
 
-.cart-btn {
+.detail-product-buttons {
   display: flex;
-  margin-right: 72%;
+}
+
+.cart-btn {
+  display: inline-block;
+  padding: 12px;
+  margin-right: 1rem;
   background-color: #E0CFA3;
+}
+
+.cart-btn:hover {
+  cursor: pointer;
+  background-color: #d4c397;
 }
 
 .review-list-container {

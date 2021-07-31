@@ -6,10 +6,10 @@ import ReactStars from "react-rating-stars-component";
 import axios from 'axios'
 
 const ProductDetail = (props) => {
-  const { token, setToken, uid, setUid, history } = props
+  const { token, history } = props
   const [review, setReview] = useState([])
   const [product, setProduct] = useState({})
-  const [user, setUser] = useState({})
+  const [user, setUser] = useState(null)
   const { id } = useParams()
   const formatter = new Intl.NumberFormat('id-ID', {
     style: 'currency',
@@ -20,19 +20,19 @@ const ProductDetail = (props) => {
     axios.get(`http://localhost:8080/product/${id}`)
       .then((res) => setProduct(res.data))
       .catch((e) => console.log(e.message))
-    console.log(product)
 
     axios.get('http://localhost:8080/users')
       .then((res) => setReview(res.data))
       .catch((e) => console.log(e.message))
 
-    axios.get(`http://localhost:8080/user/${uid}`)
-      .then((res) => setUser(res.data))
-      .catch((e) => console.log(e.message))
-    console.log(user)
+    axios.get('http://localhost:8080/user', {
+      headers: {
+        'auth-token': token
+      }
+    }).then((res) =>
+      setUser(res.data)
+    ).catch(e => console.log(e.message));
   }, [])
-
-  console.log(id)
 
   const handleAddToCart = () => {
     alert("Added to Cart")
@@ -40,10 +40,77 @@ const ProductDetail = (props) => {
       history.push('/cart');
     }
   }
-  console.log(token)
+
   const handleCartNotLoggedIn = () => {
     alert("Please sign in to continue")
     history.push('/signin');
+  }
+
+  const handleAddToWishlist = async () => {
+    const wishlistObject = {
+      productId: id,
+      product_name: product.product_name,
+      price: product.price,
+      average_rating: product.average_rating
+    };
+    try {
+      await axios.put('http://localhost:8080/user/wishlist/add', wishlistObject, {
+        headers: {
+          'auth-token': token
+        }
+      });
+      alert('Added to wishlist!')
+      window.location.reload();
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+
+  const handleRemoveFromWishlist = async () => {
+    const productId = {
+      productId: id
+    };
+    try {
+      await axios.put('http://localhost:8080/user/wishlist/remove', productId, {
+        headers: {
+          'auth-token': token
+        }
+      });
+      alert('Removed from wishlist!')
+      window.location.reload();
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+
+  const checkWishlistExist = () => {
+    let status = false;
+    if (user.wishlist.length === 0)
+      return status
+
+    Array.prototype.forEach.call(user.wishlist, (elem) => {
+      console.log(elem.productId === id);
+      if (elem.productId === id) 
+        status = true;
+    })
+
+    return status;
+  }
+
+  const wishListButton = () => {
+    if (token) {
+      if (checkWishlistExist()) {
+        return (
+          <button onClick={() => handleRemoveFromWishlist()} className="cart-btn"> <span>REMOVE FROM WISHLIST</span></button>
+        )
+      }
+      else {
+        return (
+          <button onClick={() => handleAddToWishlist()} className="cart-btn"> <span>ADD TO WISHLIST</span></button>
+        )
+      }
+    }
+    return;
   }
 
   const addToCart = () => {
@@ -61,7 +128,7 @@ const ProductDetail = (props) => {
   return (
     <div>
       <div className="detail-product">
-      <img src={process.env.PUBLIC_URL + '/images/product/gambar_belum_ada.jpg'} alt="" />
+        <img src={process.env.PUBLIC_URL + '/images/product/gambar_belum_ada.jpg'} alt="" />
         <div className="detail-description">
           <h2>{product.product_name}</h2>
           <div>
@@ -89,7 +156,10 @@ const ProductDetail = (props) => {
               <p>Blabla       :</p>
             </li>
           </ul>
-          <button onClick={() => addToCart()} className="cart-btn"> <h2>ADD TO CART</h2></button>
+          <div className="detail-product-buttons">
+            <button onClick={() => addToCart()} className="cart-btn"> <span>ADD TO CART</span></button>
+            {user !== null? wishListButton() : ''}
+          </div>
           {/* {user.cart.push(product)} */}
         </div>
       </div>
