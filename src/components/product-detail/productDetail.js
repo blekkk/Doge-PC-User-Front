@@ -47,9 +47,6 @@ const ProductDetail = (props) => {
   const handleAddToWishlist = async () => {
     const wishlistObject = {
       productId: id,
-      product_name: product.product_name,
-      price: product.price,
-      average_rating: product.average_rating
     };
     try {
       await axios.put('http://localhost:8080/user/wishlist/add', wishlistObject, {

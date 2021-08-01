@@ -8,7 +8,8 @@ import { Link } from 'react-router-dom';
 
 const MyAccount = (props) => {
   const { token, history } = props;
-  const [user, setUser] = useState({wishlist: []});
+  const [user, setUser] = useState({ wishlist: [] });
+  const [wishlistArray, setWishlistArray] = useState([]);
 
   const formatter = new Intl.NumberFormat('id-ID', {
     style: 'currency',
@@ -25,7 +26,16 @@ const MyAccount = (props) => {
     ).catch(e => console.log(e.message));
   }, []);
 
-  console.log(user);
+  useEffect(() => {
+    if (user.wishlist.length !== 0) {
+      user.wishlist.forEach((elemId) => {
+        axios.get(`http://localhost:8080/product/${elemId}`)
+          .then((res) => {
+            setWishlistArray(oldArr => [...oldArr, res.data]);
+          }).catch(e => console.log(e.message));
+      })
+    }
+  }, [user])
 
   const handleUpdateUserProfile = async (data) => {
     return await axios.put('http://localhost:8080/user', data, {
@@ -42,7 +52,7 @@ const MyAccount = (props) => {
       }
     })
   }
-  
+
   if (!token) {
     return (
       <>
@@ -69,11 +79,11 @@ const MyAccount = (props) => {
                 zip_code: user.address?.zip_code || '',
               }}
               enableReinitialize={true}
-              onSubmit={ async (values) => {
+              onSubmit={async (values) => {
                 try {
-                  await handleUpdateUserProfile({...values});
+                  await handleUpdateUserProfile({ ...values });
                 } catch (e) {
-                  console.log(e.message);                  
+                  console.log(e.message);
                 }
               }}
             >
@@ -81,31 +91,31 @@ const MyAccount = (props) => {
                 <Form>
                   <div>
                     <label htmlFor="first_name">First Name</label>
-                    <Field type="text" name="first_name" required/>
+                    <Field type="text" name="first_name" required />
                   </div>
                   <div>
                     <label htmlFor="last_name">Last Name</label>
-                    <Field type="text" name="last_name"/>
+                    <Field type="text" name="last_name" />
                   </div>
                   <div>
                     <label htmlFor="phone_number">Phone Number</label>
-                    <Field type="tel" name="phone_number"/>
+                    <Field type="tel" name="phone_number" />
                   </div>
                   <div>
                     <label htmlFor="province">Province</label>
-                    <Field type="text" name="province"/>
+                    <Field type="text" name="province" />
                   </div>
                   <div>
                     <label htmlFor="city">City</label>
-                    <Field type="text" name="city"/>
+                    <Field type="text" name="city" />
                   </div>
                   <div>
                     <label htmlFor="street">Street</label>
-                    <Field as="textarea" name="street"/>
+                    <Field as="textarea" name="street" />
                   </div>
                   <div>
                     <label htmlFor="zip_code">Zip Code</label>
-                    <Field type="text" name="zip_code"/>
+                    <Field type="text" name="zip_code" />
                   </div>
                   <br />
                   <button type="submit">
@@ -129,14 +139,14 @@ const MyAccount = (props) => {
                 }
                 return error;
               }}
-              onSubmit={ async (values) => {
+              onSubmit={async (values) => {
                 try {
                   const data = {
                     password: values.password
                   }
                   await handleChangePassword(data);
                 } catch (e) {
-                  console.log(e.message);                  
+                  console.log(e.message);
                 }
               }}
             >
@@ -144,12 +154,12 @@ const MyAccount = (props) => {
                 <Form>
                   <div>
                     <label htmlFor="password">New password</label>
-                    <Field type="password" name="password" required/>
+                    <Field type="password" name="password" required />
                     <ErrorMessage name="password" component="div" className="form-error" />
                   </div>
                   <div>
                     <label htmlFor="re_password">Retype new password</label>
-                    <Field type="password" name="re_password" required/>
+                    <Field type="password" name="re_password" required />
                     <ErrorMessage name="re_password" component="div" className="form-error" />
                   </div>
                   <br />
@@ -160,14 +170,14 @@ const MyAccount = (props) => {
               )}
             </Formik>
             <h2>Wishlist</h2>
-            {Array.prototype.map.call(user.wishlist, (item) => {
-              return(
-                <div className="wishlist-item-wrapper">
+            {Array.prototype.map.call(wishlistArray, (item) => {
+              return (
+                <div className="wishlist-item-wrapper" key={item.productId}>
                   <div className="wishlist-item-wrapper-image">
-                  <img src={process.env.PUBLIC_URL + '/images/product/gambar_belum_ada.jpg'} alt="gambar lom ada" />
+                    <img src={process.env.PUBLIC_URL + '/images/product/gambar_belum_ada.jpg'} alt="gambar lom ada" />
                   </div>
                   <div className="wishlist-item-wrapper-details">
-                    <Link to={`/product-detail/${item.productId}`}>
+                    <Link to={`/product-detail/${item._id}`}>
                       <p>{item.product_name}</p>
                     </Link>
                     <p>{formatter.format(item.price)}</p>
