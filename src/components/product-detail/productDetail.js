@@ -10,6 +10,7 @@ const ProductDetail = (props) => {
   const [review, setReview] = useState([])
   const [product, setProduct] = useState({})
   const [user, setUser] = useState(null)
+  const [cart, setCart] = useState({cartProducts: []})
   const { id } = useParams()
   const formatter = new Intl.NumberFormat('id-ID', {
     style: 'currency',
@@ -23,7 +24,7 @@ const ProductDetail = (props) => {
 
     axios.get('http://localhost:8080/users')
       .then((res) => setReview(res.data))
-      .catch((e) => console.log(e.message))
+      .catch((e) => console.log(e.message))    
 
     axios.get('http://localhost:8080/user', {
       headers: {
@@ -31,20 +32,17 @@ const ProductDetail = (props) => {
       }
     }).then((res) =>
       setUser(res.data)
+    ).catch(e => console.log(e.message));    
+    
+    axios.get('http://localhost:8080/cart', {
+      headers: {
+        'auth-token': token
+      }
+    }).then((res) =>
+      setCart(res.data)
     ).catch(e => console.log(e.message));
-  }, [])
-
-  const handleAddToCart = () => {
-    alert("Added to Cart")
-    if (window.confirm("Go to cart now?")) {
-      history.push('/cart');
-    }
-  }
-
-  const handleCartNotLoggedIn = () => {
-    alert("Please sign in to continue")
-    history.push('/signin');
-  }
+  
+  }, [])  
 
   const handleAddToWishlist = async () => {
     const wishlistObject = {
@@ -89,7 +87,6 @@ const ProductDetail = (props) => {
       return status
 
     Array.prototype.forEach.call(user.wishlist, (elem) => {
-      console.log(elem.productId === id);
       if (elem.productId === id) 
         status = true;
     })
@@ -101,17 +98,58 @@ const ProductDetail = (props) => {
     if (token) {
       if (checkWishlistExist()) {
         return (
-          <button onClick={() => handleRemoveFromWishlist()} className="cart-btn"> <span>REMOVE FROM WISHLIST</span></button>
+          <button onClick={() => handleRemoveFromWishlist()} className="wishlist-btn"> <span>REMOVE FROM WISHLIST</span></button>
         )
       }
       else {
         return (
-          <button onClick={() => handleAddToWishlist()} className="cart-btn"> <span>ADD TO WISHLIST</span></button>
+          <button onClick={() => handleAddToWishlist()} className="wishlist-btn"> <span>ADD TO WISHLIST</span></button>
         )
       }
     }
     return;
   }
+
+  const handleAddToCart = async () => {
+    const productCart = {
+      productId: id,
+      amount: 1
+    };
+    try {
+      await axios.put('http://localhost:8080/cart', productCart, {
+        headers: {
+          'auth-token': token
+        }
+      });
+      alert('Added to cart!')
+      if (window.confirm("Go to cart now?")) {
+        history.push('/cart');
+      } else {
+        window.location.reload()
+      }      
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+
+  const handleRemoveFromCart = async () => {
+    try {
+      await axios.delete(`http://localhost:8080/cart/${id}`, {
+        headers: {
+          'auth-token': token
+        }
+      });
+      alert('Removed from cart!')
+      window.location.reload();
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+
+  const handleCartNotLoggedIn = () => {
+    alert("Please sign in to continue")
+    history.push('/signin');
+  }  
 
   const addToCart = () => {
     if (token) {
@@ -123,6 +161,33 @@ const ProductDetail = (props) => {
         handleCartNotLoggedIn()
       )
     }
+  }
+
+  const checkCartProductExist = () => {
+    let status = false
+    if (cart?.cartProducts?.length === 0) {
+      return status
+    }
+
+    Array.prototype.forEach.call(cart?.cartProducts, (elem) => {      
+      if (elem.productId === id) {
+        status = true;
+      }        
+    })
+    return status;
+  }
+
+  const cartButton = () => {
+    if (checkCartProductExist()) {
+      return (
+        <button onClick={() => handleRemoveFromCart()} className="cart-btn"> <span>REMOVE FROM CART</span></button>
+      )
+    }
+    else {
+      return (
+        <button onClick={() => addToCart()} className="cart-btn"> <span>ADD TO CART</span></button>
+      )
+    }     
   }
 
   return (
@@ -157,10 +222,9 @@ const ProductDetail = (props) => {
             </li>
           </ul>
           <div className="detail-product-buttons">
-            <button onClick={() => addToCart()} className="cart-btn"> <span>ADD TO CART</span></button>
+            {cartButton()}
             {user !== null? wishListButton() : ''}
           </div>
-          {/* {user.cart.push(product)} */}
         </div>
       </div>
       <h3 style={{ margin: "50px 10px 10px 10px" }}>Reviews</h3>

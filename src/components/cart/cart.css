@@ -2,13 +2,13 @@
   margin: 0 50px 50px 50px;
 }
 
-.product-cart {
+.product-cart-item {
   display: grid;
   grid-template-columns: max-content 100px auto;
   grid-gap: 30px;
 }
 
-.product-cart img {
+.product-cart-item img {
   width: 100%;
 }
 
@@ -16,4 +16,16 @@
   display: grid;
   grid-template-columns: max-content max-content;
   grid-gap: 10px;
+}
+
+.checkout-btn {
+  display: inline-block;
+  padding: 12px;
+  margin-right: 1rem;
+  background-color: #E0CFA3;
+}
+
+.checkout-btn:hover {
+  cursor: pointer;
+  background-color: #d4c397;
 }
