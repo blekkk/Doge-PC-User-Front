@@ -6,6 +6,9 @@ import Cart from '../cart/cart';
 import Products from '../products/products';
 import MyAccount from '../my-account/myAccount';
 import Checkout from '../checkout/checkout';
+import SearchPage from '../searchpage/searchPage';
+import AboutUs from '../about-us/aboutUs';
+import MyTransactions from '../my-transactions/myTransactions';
 import {
   Switch,
   Route,
@@ -45,11 +48,20 @@ const Main = (props) => {
         <Route path='/PSU'>
           <Products key={nanoid()} category="PSU" />
         </Route>
+        <Route path='/search'>
+          <SearchPage key={nanoid()} />
+        </Route>
         <Route path='/product-detail/:id'>
           <ProductDetail token={token} />
         </Route>
         <Route path='/cart'>
           <Cart token={token} />
+        </Route>
+        <Route path='/about-us'>
+          <AboutUs />
+        </Route>
+        <Route path='/my-transactions'>
+          <MyTransactions token={token}/>
         </Route>
         <Route path='/account'>
           <MyAccount token={token} />

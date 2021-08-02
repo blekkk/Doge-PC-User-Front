@@ -8,6 +8,15 @@
     padding: 0.5rem 2rem;
 }
 
+.footer-wrapper a {
+    text-decoration: none;
+    color: black;
+}
+
+.footer-wrapper a:hover {
+    text-decoration: underline;
+}
+
 .logo-footer {
     display: flex;
     align-items: flex-end;

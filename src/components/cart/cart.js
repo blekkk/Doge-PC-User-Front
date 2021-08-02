@@ -138,12 +138,8 @@ const Cart = (props) => {
                   -
                 </button>
                 <span> {elem.amount} </span>
-                <button
-                  className="plus-button"
-                  onClick={() => handleIncrement(index)}
-                >
-                  +
-                </button>
+                <button className="plus-button" onClick={() => handleIncrement(index)}>+</button>
+                <span> (Available stock: {cartProduct[index]?.stock}) </span>
               </div>
             </div>
           </div>

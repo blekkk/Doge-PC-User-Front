@@ -1,0 +1,59 @@
+.myTransactions-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.myTransactions-content {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 0 3px #ccc;
+  border-radius: 12px;
+  margin: 2rem 0;
+}
+
+.myTransactions-content>div {
+  margin: 2rem 0;
+}
+
+.myTransactions-description {
+  border-radius: 12px;
+  box-shadow: 0 0 3px #ccc;
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  padding: 2rem;
+}
+
+.myTransactions-faces {
+  display: flex;
+}
+
+.myTransactions-faces img {
+  height: 256px;
+  width: 256px;
+  object-fit: cover;
+  margin: 0 2rem;
+  border-radius: 50%;
+  box-shadow: 0 0 3px rgb(121, 121, 121);
+  padding: 3px;
+}
+
+.myTransactions-faces a:nth-child(2) {
+  transform: scaleX(-1);
+}
+
+.myTransactions-faces img:hover {
+  filter: brightness(90%);
+}
+
+.myTransactions-product-item {
+  border-radius: 12px;
+  box-shadow: 0 0 3px #ccc;
+  padding: 2rem;
+  margin: 1rem 0;
+  display: flex;
+  align-items: center;
+}

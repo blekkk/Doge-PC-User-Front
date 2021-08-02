@@ -4,13 +4,13 @@ import { IoPersonCircle } from 'react-icons/io5'
 import { useParams, withRouter } from 'react-router'
 import ReactStars from "react-rating-stars-component";
 import axios from 'axios'
+import { nanoid } from 'nanoid';
 
 const ProductDetail = (props) => {
   const { token, history } = props
-  const [review, setReview] = useState([])
-  const [product, setProduct] = useState({})
+  const [product, setProduct] = useState({ reviews: [] })
   const [user, setUser] = useState(null)
-  const [cart, setCart] = useState({cartProducts: []})
+  const [cart, setCart] = useState({ cartProducts: [] })
   const { id } = useParams()
   const formatter = new Intl.NumberFormat('id-ID', {
     style: 'currency',
@@ -19,12 +19,10 @@ const ProductDetail = (props) => {
 
   useEffect(() => {
     axios.get(`http://localhost:8080/product/${id}`)
-      .then((res) => setProduct(res.data))
+      .then((res) => {
+        setProduct(res.data);
+      })
       .catch((e) => console.log(e.message))
-
-    axios.get('http://localhost:8080/users')
-      .then((res) => setReview(res.data))
-      .catch((e) => console.log(e.message))    
 
     axios.get('http://localhost:8080/user', {
       headers: {
@@ -32,8 +30,8 @@ const ProductDetail = (props) => {
       }
     }).then((res) =>
       setUser(res.data)
-    ).catch(e => console.log(e.message));    
-    
+    ).catch(e => console.log(e.message));
+
     axios.get('http://localhost:8080/cart', {
       headers: {
         'auth-token': token
@@ -41,8 +39,8 @@ const ProductDetail = (props) => {
     }).then((res) =>
       setCart(res.data)
     ).catch(e => console.log(e.message));
-  
-  }, [])  
+
+  }, [])
 
   const handleAddToWishlist = async () => {
     const wishlistObject = {
@@ -83,8 +81,8 @@ const ProductDetail = (props) => {
     if (user.wishlist.length === 0)
       return status
 
-    Array.prototype.forEach.call(user.wishlist, (elem) => {
-      if (elem.productId === id) 
+    Array.prototype.forEach.call(user.wishlist, (elemId) => {
+      if (elemId === id)
         status = true;
     })
 
@@ -95,18 +93,17 @@ const ProductDetail = (props) => {
     if (token) {
       if (checkWishlistExist()) {
         return (
-          <button onClick={() => handleRemoveFromWishlist()} className="wishlist-btn"> <span>REMOVE FROM WISHLIST</span></button>
+          <button onClick={() => handleRemoveFromWishlist()} className="cart-btn"> <span>REMOVE FROM WISHLIST</span></button>
         )
       }
       else {
         return (
-          <button onClick={() => handleAddToWishlist()} className="wishlist-btn"> <span>ADD TO WISHLIST</span></button>
+          <button onClick={() => handleAddToWishlist()} className="cart-btn"> <span>ADD TO WISHLIST</span></button>
         )
       }
     }
     return;
   }
-
   const handleAddToCart = async () => {
     const productCart = {
       productId: id,
@@ -123,7 +120,7 @@ const ProductDetail = (props) => {
         history.push('/cart');
       } else {
         window.location.reload()
-      }      
+      }
     } catch (error) {
       console.log(error.message);
     }
@@ -146,7 +143,7 @@ const ProductDetail = (props) => {
   const handleCartNotLoggedIn = () => {
     alert("Please sign in to continue")
     history.push('/signin');
-  }  
+  }
 
   const addToCart = () => {
     if (token) {
@@ -166,10 +163,10 @@ const ProductDetail = (props) => {
       return status
     }
 
-    Array.prototype.forEach.call(cart?.cartProducts, (elem) => {      
+    Array.prototype.forEach.call(cart?.cartProducts, (elem) => {
       if (elem.productId === id) {
         status = true;
-      }        
+      }
     })
     return status;
   }
@@ -184,7 +181,38 @@ const ProductDetail = (props) => {
       return (
         <button onClick={() => addToCart()} className="cart-btn"> <span>ADD TO CART</span></button>
       )
-    }     
+    }
+  }
+
+  const showReviews = () => {
+    if (!product?.reviews) {
+      return (
+        <h2>No reviews for this product</h2>
+      )
+    }
+
+    return product?.reviews?.map((elem) => {
+      return (
+        <div key={nanoid()} className="user-review">
+          <div className="user-review-name">
+            <span className=" user-review-avatar"><IoPersonCircle /></span>
+            <div className="user-review-name-rating">
+              <span>{elem.name}</span>
+              <ReactStars
+                count={5}
+                size={24}
+                activeColor="#ffd700"
+                value={elem.rating}
+                edit={false}
+              />
+            </div>
+          </div>
+          <div>
+            <p>{elem.comment}</p>
+          </div>
+        </div>
+      )
+    })
   }
 
   return (
@@ -195,15 +223,16 @@ const ProductDetail = (props) => {
           <h2>{product.product_name}</h2>
           <div>
             <h3>{formatter.format(product.price)}</h3>
-            <ReactStars
-              count={5}
-              size={24}
-              activeColor="#ffd700"
-              value={product.avgRating}
-              edit={false}
-            />
+            {console.log(product)}
           </div>
-          <p>Deskripsi Deskripsi Deskripsi Deskripsi Deskripsi Deskripsi </p>
+          <p><b>Rating: {product.average_rating}</b> (react-stars doesn't work, idk why)</p>
+          {/* <ReactStars
+            count={5}
+            size={24}
+            activeColor="#ffd700"
+            value={productRating}
+            edit={false}
+          /> */}
           <ul>
             <li>
               <p>Category     : {product.category?.main_category}</p>
@@ -214,26 +243,16 @@ const ProductDetail = (props) => {
             <li>
               <p>Brand        : {product.brand}</p>
             </li>
-            <li>
-              <p>Blabla       :</p>
-            </li>
           </ul>
           <div className="detail-product-buttons">
             {cartButton()}
-            {user !== null? wishListButton() : ''}
+            {user !== null ? wishListButton() : ''}
           </div>
         </div>
       </div>
       <h3 style={{ margin: "50px 10px 10px 10px" }}>Reviews</h3>
       <div className="review-list-container">
-        {review.map((elem) => {
-          return (
-            <div key={elem._id} className="user-review">
-              <aside className="user-review-avatar"><IoPersonCircle /></aside>
-              <p>{elem.first_name} {elem.last_name}</p>
-            </div>
-          )
-        })}
+        { showReviews() }
       </div>
     </div>
   )

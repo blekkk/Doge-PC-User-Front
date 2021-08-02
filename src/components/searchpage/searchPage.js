@@ -1,12 +1,11 @@
-import './products.css';
 import axios from 'axios';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import ReactPaginate from 'react-paginate';
 import ReactStars from "react-rating-stars-component";
 import { Formik, Form, Field } from 'formik';
 import { withRouter, Link } from 'react-router-dom';
 
-const Products = (props) => {
+const SearchPage = (props) => {
   const { history, category } = props;
   const [data, setData] = useState({
     data: [],
@@ -15,14 +14,17 @@ const Products = (props) => {
   const [offset, setOffset] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
   const [pageCount, setPageCount] = useState(0);
+  const firstUpdate = useRef(true);
   const perPage = 9;
   let query;
   let queryString = '?' + (window.location.href.split('?')[1] || '');
+  let queryStringProductName = '?' + (window.location.href.split('?')[1] || '');
+  console.log(queryStringProductName);
 
   const formatter = new Intl.NumberFormat('id-ID', {
     style: 'currency',
     currency: 'IDR'
-  });
+  }); 
 
   const filterEmptyValue = (valueObject) => {
     return valueObject.map(el => {
@@ -36,8 +38,31 @@ const Products = (props) => {
     })[0];
   }
 
+  useLayoutEffect(() => {
+    if (firstUpdate.current) {
+      firstUpdate.current = false;
+      return;
+    }
+    queryStringProductName = queryStringProductName.split('&')[0];
+    console.log(queryStringProductName);
+    if (queryStringProductName === queryString) {
+      axios.get(`http://localhost:8080/products/${queryStringProductName}`)
+        .then((res) => {
+          const data = res.data;
+          const slicedData = data.slice(offset, offset + perPage);
+  
+          setPageCount(Math.ceil(data.length / perPage))
+          setData({
+            data: slicedData,
+            lenght: data.length
+          });
+        })
+        .catch((e) => console.log(e.message));
+    }
+  }, [queryStringProductName])
+
   useEffect(() => {
-    axios.get(`http://localhost:8080/products/${category + queryString}`)
+    axios.get(`http://localhost:8080/products/${queryString}`)
       .then((res) => {
         const data = res.data;
         const slicedData = data.slice(offset, offset + perPage);
@@ -56,9 +81,10 @@ const Products = (props) => {
     const filteredArray = Object.keys(filteredObject).map((k) => `${k}=${filteredObject[k]}`)
 
     query = filteredArray;
-    queryString = '?' + query.join('&');
+    queryStringProductName = queryStringProductName.split('&')[0];
+    queryString = '&' + query.join('&');
 
-    axios.get(`http://localhost:8080/products/${category + queryString}`)
+    axios.get(`http://localhost:8080/products/${queryStringProductName + queryString}`)
       .then((res) => {
         const data = res.data;
         const slicedData = data.slice(offset, offset + perPage);
@@ -96,7 +122,7 @@ const Products = (props) => {
   return (
     <div className="products-wrapper" key={props.key}>
       <div className="products-content">
-        <h1 className="product-name-h1">{category} - {data.lenght} Product</h1>
+        <h1 className="product-name-h1">Search Result - {data.lenght} Product</h1>
         <div className="products-content-main">
           <aside className="product-filter-aside">
             <h3>Product Filters</h3>
@@ -114,7 +140,7 @@ const Products = (props) => {
                     minRating: parseInt(values.minRating) || "",
                   }];
                   fetchDataQuery(queries);
-                  history.push(`/${category + queryString}`);
+                  history.push(`/search${queryStringProductName + queryString}`);
                 } catch (error) {
                   console.log(error);
                 }
@@ -168,7 +194,7 @@ const Products = (props) => {
                                 count={5}
                                 size={24}
                                 activeColor="#ffd700"
-                                value={elem.average_rating}
+                                value={elem.avgRating}
                                 edit={false}
                               />
                               <span>&nbsp;({elem?.reviews ? elem?.reviews?.length : 0})</span>
@@ -203,4 +229,4 @@ const Products = (props) => {
   )
 }
 
-export default withRouter(Products);
+export default withRouter(SearchPage);

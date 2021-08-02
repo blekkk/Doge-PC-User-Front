@@ -1,11 +1,11 @@
 import './header.css';
 import { Formik, Form, Field } from 'formik';
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink, Link, withRouter } from 'react-router-dom';
 import { IoPersonCircle, IoCart } from 'react-icons/io5';
 import { useState } from 'react';
 
 const Header = (props) => {
-  const { token, deleteToken } = props;
+  const { token, deleteToken, history } = props;
   const [profileDropdownFlag, setProfileDropdownFlag] = useState(false);
 
   const profileDropdown = () => {
@@ -14,6 +14,9 @@ const Header = (props) => {
         <div className="profile-dropdown">
           <Link to="/account">
             <p>My Account</p>
+          </Link>
+          <Link to="/my-transactions">
+            <p>My Transactions</p>
           </Link>
           <p onClick={() => {
             deleteToken();
@@ -66,14 +69,15 @@ const Header = (props) => {
           <Formik
             initialValues={{ search: '' }}
             onSubmit={(values, { setSubmitting }) => {
-              alert(values.search);
+              const seachString = values.search.replace(' ', '%20');
+              history.push(`/search?productName=${seachString}`)
               setSubmitting(false);
             }}
           >
             {({ isSubmitting }) => (
               <Form>
                 <div className='search-field'>
-                  <Field type="text" name="search" placeholder="Search here..." />
+                  <Field type="text" name="search" placeholder="Search here..." required/>
                   <button type="submit" disabled={isSubmitting} className="main-button">
                     Search
                   </button>
@@ -122,4 +126,4 @@ const Header = (props) => {
   )
 }
 
-export default Header;
+export default withRouter(Header);

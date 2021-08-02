@@ -1,5 +1,5 @@
 import './footer.css';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { IoLogoFacebook, IoLogoInstagram, IoLogoTwitter } from "react-icons/io5";
 
 const Footer = (props) => {
@@ -13,24 +13,24 @@ const Footer = (props) => {
                         <img src={process.env.PUBLIC_URL + '/dogePC.png'} className="logo-3" alt=""/>
                         <img src={process.env.PUBLIC_URL + '/dogePC.png'} className="logo-4" alt=""/>
                     </div>
-                    <NavLink to='/'>
+                    <Link to='/'>
                         <h2 id="doge-pc">
                             Doge-PC
                         </h2>
-                    </NavLink>
+                    </Link>
                 </nav>
 
                 <div className="footer-support">
                     <ul>
                         <li>
-                            <NavLink to='/about_us'>
+                            <Link to='/about-us'>
                                 About Us
-                            </NavLink>
+                            </Link>
                         </li>
                         <li>
-                            <NavLink to='/customer_service'>
+                            <Link to='/customer-service'>
                                 Customer Service
-                            </NavLink>
+                            </Link>
                         </li>
                     </ul>
 
