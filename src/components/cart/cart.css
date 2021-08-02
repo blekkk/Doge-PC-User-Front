@@ -2,9 +2,13 @@
   margin: 0 50px 50px 50px;
 }
 
+.cart-container>h1 {
+  margin-left: 20px;
+}
+
 .product-cart-item {
   display: grid;
-  grid-template-columns: max-content 100px auto;
+  grid-template-columns: 100px auto;
   grid-gap: 30px;
 }
 
