@@ -27,11 +27,6 @@ const Footer = (props) => {
                                 About Us
                             </Link>
                         </li>
-                        <li>
-                            <Link to='/customer-service'>
-                                Customer Service
-                            </Link>
-                        </li>
                     </ul>
 
                     <nav className="social-media">
